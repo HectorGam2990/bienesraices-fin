@@ -1,3 +1,7 @@
 [build]
-  command = "npx gulp"
   publish = "build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
