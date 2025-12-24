@@ -27,7 +27,7 @@ function css() {
             cssnano()
         ]))
         .pipe(sourcemaps.write('.'))
-        .pipe(dest('./build/css'));
+        .pipe(dest('./css'));
 }
 
 // ================= JS =================
@@ -38,21 +38,21 @@ function javascript() {
         .pipe(terser())
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('.'))
-        .pipe(dest('./build/js'));
+        .pipe(dest('./js'));
 }
 
 // ================= IMÁGENES =================
 function imagenes() {
     return src(paths.imagenes)
         .pipe(cache(imagemin({ optimizationLevel: 3 })))
-        .pipe(dest('./build/img'));
+        .pipe(dest('./img'));
 }
 
 // ================= WEBP =================
 function versionWebp() {
     return src(paths.imagenes)
         .pipe(webp())
-        .pipe(dest('./build/img'));
+        .pipe(dest('./img'));
 }
 
 // ================= BUILD PARA NETLIFY =================
