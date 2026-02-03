@@ -14,7 +14,8 @@ const webp = require('gulp-webp');
 const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
-    imagenes: 'src/img/**/*'
+    imagenes: 'src/img/**/*',
+    html: '*.html'
 };
 
 // ================= CSS =================
@@ -27,7 +28,7 @@ function css() {
             cssnano()
         ]))
         .pipe(sourcemaps.write('.'))
-        .pipe(dest('./css'));
+        .pipe(dest('./build/css'));
 }
 
 // ================= JS =================
@@ -38,23 +39,29 @@ function javascript() {
         .pipe(terser())
         .pipe(rename({ suffix: '.min' }))
         .pipe(sourcemaps.write('.'))
-        .pipe(dest('./js'));
+        .pipe(dest('./build/js'));
 }
 
 // ================= IMÁGENES =================
 function imagenes() {
     return src(paths.imagenes)
         .pipe(cache(imagemin({ optimizationLevel: 3 })))
-        .pipe(dest('./img'));
+        .pipe(dest('./build/img'));
 }
 
 // ================= WEBP =================
 function versionWebp() {
     return src(paths.imagenes)
         .pipe(webp())
-        .pipe(dest('./img'));
+        .pipe(dest('./build/img'));
+}
+
+// ================= HTML =================
+function html() {
+    return src(paths.html)
+        .pipe(dest('./build'));
 }
 
 // ================= BUILD PARA NETLIFY =================
-exports.build = parallel(css, javascript, imagenes, versionWebp);
+exports.build = parallel(css, javascript, imagenes, versionWebp, html);
 exports.default = exports.build;
